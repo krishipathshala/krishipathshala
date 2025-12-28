@@ -3,69 +3,306 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coming Soon | Krishipathshala</title>
+    <title>Krishipathshala | Coming Soon</title>
+    <link href="fonts.googleapis.com" rel="stylesheet">
     <style>
-        
+        :root {
+            --primary: #2d5a27; 
+            --accent: #f4a261;  
+            --text-dark: #1a1a1a;
+            --text-light: #555;
+            --bg-light: #fdfdfd;
+        }
+
         body, html {
-            height: 100%;
             margin: 0;
-            font-family: 'Arial', sans-serif;
-            color: white;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
+        .lang-switch {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch:hover { background: var(--primary); color: white; }
+
+        .hero {
+    height: 100vh;
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center; 
+    color: white; 
+    padding: 0 20px;
+    position: relative;
+    overflow: hidden;
+    /* Remove background from here so pseudo-elements work */
+    background: #000; 
+}
+
+/* Layer 1: Farm 1 (Bottom) */
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('farm1.jpg') center/cover no-repeat;
+    z-index: 0;
+}
+
+/* Layer 2: Farm 2 (Top) */
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('farm2.jpg') center/cover no-repeat;
+    z-index: 1; /* Sits on top of ::before */
+    animation: fadeCycle 10s ease-in-out infinite;
+}
+
+/* Animate only the top layer's opacity */
+@keyframes fadeCycle {
+    0%, 15% { opacity: 0; }    /* Show Farm 1 */
+    45%, 65% { opacity: 1; }   /* Show Farm 2 */
+    90%, 100% { opacity: 0; }  /* Back to Farm 1 */
+}
+
+/* Ensure text is above BOTH images */
+.hero h1, .hero p {
+    position: relative;
+    z-index: 10;
+}
+
+
+
+
+        .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 8vw, 4.5rem); margin: 0 0 10px; text-transform: uppercase; letter-spacing: 4px; }
         
-        .bg-container {
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                              url('farm2.jpg');
-            height: 100%;
-            background-position: center;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+        section { padding: 80px 10% 60px; max-width: 1200px; margin: 0 auto; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: var(--primary); margin-bottom: 30px; position: relative; display: inline-block; }
+        .section-title::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: var(--accent); }
 
+        .about-grid, .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; text-align: left; margin-top: 40px; }
+
+        /* Contact Form Styling */
+        .contact-info-card { background: var(--primary); color: white; padding: 40px; border-radius: 20px; }
+        .contact-info-card h3 { margin-top: 0; font-family: 'Playfair Display', serif; }
         
-        .content {
-            max-width: 600px;
-            padding: 20px;
+        .form-group { margin-bottom: 15px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 5px; font-size: 0.9rem; }
+        .form-group input, .form-group textarea { 
+            width: 100%; padding: 10px; border-radius: 8px; border: none; font-family: inherit; box-sizing: border-box; background: var(--accent)
+        }
+        .form-group input,
+        .form-group textarea { 
+        width: 100%; 
+        padding: 10px; 
+        border-radius: 8px; 
+        border: 1px solid rgba(255, 255, 255, 0.8); 
+        font-family: inherit; 
+        box-sizing: border-box;
+        color: white; 
+        outline: none;
         }
 
-        h1 {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-        }
 
-        p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-        }
+.form-group input::placeholder, 
+.form-group textarea::placeholder {
+    color: rgba(255, 255, 255, 0.8); 
+}
 
-        
 
-        
-        .footer { 
-            margin-top: 50px;
-            font-size: 0.9rem;
-            opacity: 0.8;
+.form-group input:focus, 
+.form-group textarea:focus {
+    border-color: var(--accent);
+}
+
+        .contact-btn { 
+            display: inline-block; margin-top: 10px; padding: 12px 30px; background: var(--accent); color: white; 
+            text-decoration: none; border-radius: 8px; font-weight: 600; border: none; cursor: pointer; width: 100%; transition: opacity 0.3s;
         }
+        .contact-btn:hover { opacity: 0.9; }
+
+        .map-container { width: 100%; height: 450px; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding-top: 40px; }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 12px; height: 250px; background: #eee; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .gallery-item:hover img { transform: scale(1.1); }
+
+        .footer { padding: 40px 20px; background: #f8f9fa; text-align: center; color: var(--text-light); border-top: 1px solid #eee; }
+
+        @media (max-width: 768px) { .about-grid, .contact-grid { grid-template-columns: 1fr; text-align: center; } }
     </style>
 </head>
 <body>
 
-    <div class="bg-container">
-        <div class="content">
-            <h1>COMING SOON</h1>
-            <p>Our website is under construction. We'll be here soon with our new awesome site.</p>
-            
-            
-            <div class="footer">
-                &copy; 2025 Madi Krishipathshala. All rights reserved.
-            </div>
-        </div>
+    <button class="lang-switch" onclick="toggleLanguage()" id="langBtn">नेपाली</button>
+
+    <div class="hero">
+        <h1 id="hero-title">COMING SOON</h1>
+        <p id="hero-desc">We'll be ready to grow with you soon.</p>
     </div>
 
+    <section id="about">
+        <div style="text-align:center;"><h2 class="section-title" id="about-title">Our Roots</h2></div>
+        <div class="about-grid">
+            <div id="about-content">
+                <p id="about-p1">At <strong>Madi Krishipathshala</strong>, we believe agriculture is the foundation of the future. Our company specializes in bridging the gap between traditional farming and modern technology.</p>
+                <p id="about-p2">We provide hands-on training, sustainable resources, and a community for farmers to innovate and thrive in an ever-changing ecological landscape.</p>
+            </div>
+            <div style="background: #f0f4f0; padding: 40px; border-radius: 20px; border-left: 5px solid var(--primary);">
+                <h3 id="values-title" style="margin-top:0; color: var(--primary);">Our Values</h3>
+                <ul style="list-style: none; padding:0; color: var(--text-light);">
+                    <li id="val1" style="margin-bottom:10px;">🌱 Sustainable Innovation</li>
+                    <li id="val2" style="margin-bottom:10px;">🚜 Community Empowerment</li>
+                    <li id="val3" style="margin-bottom:10px;">📚 Modern Education</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: #fafafa; max-width: 100%;">
+        <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <h2 class="section-title" id="contact-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info-card">
+                    <h3 id="contact-sub">Contact Us</h3>
+                    
+                    <!-- Web3Forms Start -->
+                    <form action="https://api.web3forms.com/submit" method="POST">
+                        <input type="hidden" name="access_key" value="0211de59-3c38-48e0-becb-e643e5944f6b">
+                        
+                        <div class="form-group">
+                            <label id="lbl-name">Full Name</label>
+                            <input type="text" name="name" required placeholder="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label id="lbl-email">Email Address</label>
+                            <input type="email" name="email" required placeholder="email@example.com">
+                        </div>
+                        <div class="form-group">
+                            <label id="lbl-msg">Message</label>
+                            <textarea name="message" rows="4" required placeholder="How can we help?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="contact-btn" id="contact-cta">Send Message</button>
+                    </form>
+                    <!-- Web3Forms End -->
+
+                    <div style="margin-top: 20px; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px;">
+                        <p>📍 Madi, Chitwan, Nepal</p>
+                        <p>☎️ +977 9849719420</p>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1397489.3279301831!2d84.07516315661502!3d27.62561384044369!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39948b6b0aac9997%3A0x66bac70330e32d0a!2sMadi%20Organic%20Farm%20Stay!5e1!3m2!1sen!2snp!4v1766918824880!5m2!1sen!2snp" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div style="text-align:center;"><h2 class="section-title" id="gallery-title">Life at the Farm</h2></div>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="Farm 3.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="Farm 4.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="farm 5.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="Farm 6.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="Farm 7.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="farm 8.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="farm 9.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="farm 10.jpg" alt="Photo"></div>
+            <div class="gallery-item"><img src="Farm 11.jpg" alt="Photo"></div>
+        </div>
+    </section>
+
+    <div class="footer"><p id="footer-text">&copy; 2025 Madi Krishipathshala. All rights reserved.</p></div>
+
+    <script>
+        let currentLang = 'en';
+        const translations = {
+            en: {
+                btn: 'नेपाली',
+                heroTitle: 'COMING SOON',
+                heroDesc: "We'll be ready to grow with you soon.",
+                aboutTitle: 'Our Roots',
+                aboutP1: 'At Madi Krishipathshala, we believe agriculture is the foundation of the future. Our company specializes in bridging the gap between traditional farming and modern technology.',
+                aboutP2: 'We provide hands-on training, sustainable resources, and a community for farmers to innovate and thrive in an ever-changing ecological landscape.',
+                valuesTitle: 'Our Values',
+                val1: '🌱 Sustainable Innovation',
+                val2: '🚜 Community Empowerment',
+                val3: '📚 Modern Education',
+                contactTitle: 'Get In Touch',
+                contactSub: 'Contact Us',
+                lblName: 'Full Name',
+                lblEmail: 'Email Address',
+                lblMsg: 'Message',
+                contactCta: 'Send Message',
+                galleryTitle: 'Life at the Farm',
+                footer: '© 2025 Madi Krishipathshala. All rights reserved.'
+            },
+            ne: {
+                btn: 'English',
+                heroTitle: 'छिट्टै आउँदैछ',
+                heroDesc: "हामी छिट्टै तपाईंसँगै अगाडि बढ्न तयार हुनेछौं।",
+                aboutTitle: 'हाम्रो उद्देश्य',
+                aboutP1: 'माडी कृषि पाठशालामा, हामी विश्वास गर्छौं कि कृषि भविष्यको आधार हो। हाम्रो कम्पनीले परम्परागत खेती र आधुनिक प्रविधि बीचको खाडललाई कम गर्न विशेषज्ञता राख्छ।',
+                aboutP2: 'हामी किसानहरूलाई सधैं परिवर्तनशील पारिस्थितिक परिदृश्यमा नवीनता ल्याउन र फस्टाउनका लागि प्रयोगात्मक तालिम, दिगो स्रोत र एउटा समुदाय प्रदान गर्दछौं।',
+                valuesTitle: 'हाम्रा मूल्यहरू',
+                val1: '🌱 दिगो नवाचार',
+                val2: '🚜 सामुदायिक सशक्तीकरण',
+                val3: '📚 आधुनिक शिक्षा',
+                contactTitle: 'सम्पर्क गर्नुहोस्',
+                contactSub: 'हामीलाई लेख्नुहोस्',
+                lblName: 'पूरा नाम',
+                lblEmail: 'इमेल ठेगाना',
+                lblMsg: 'सन्देश',
+                contactCta: 'सन्देश पठाउनुहोस्',
+                galleryTitle: 'फार्मको झलक',
+                footer: '© २०२५ माडी कृषि पाठशाला। सर्वाधिकार सुरक्षित।'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'ne' : 'en';
+            const t = translations[currentLang];
+            
+            document.getElementById('langBtn').innerText = t.btn;
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.getElementById('about-title').innerText = t.aboutTitle;
+            document.getElementById('about-p1').innerHTML = t.aboutP1;
+            document.getElementById('about-p2').innerText = t.aboutP2;
+            document.getElementById('values-title').innerText = t.valuesTitle;
+            document.getElementById('val1').innerText = t.val1;
+            document.getElementById('val2').innerText = t.val2;
+            document.getElementById('val3').innerText = t.val3;
+            document.getElementById('contact-title').innerText = t.contactTitle;
+            document.getElementById('contact-sub').innerText = t.contactSub;
+            document.getElementById('lbl-name').innerText = t.lblName;
+            document.getElementById('lbl-email').innerText = t.lblEmail;
+            document.getElementById('lbl-msg').innerText = t.lblMsg;
+            document.getElementById('contact-cta').innerText = t.contactCta;
+            document.getElementById('gallery-title').innerText = t.galleryTitle;
+            document.getElementById('footer-text').innerText = t.footer;
+        }
+    </script>
 </body>
 </html>
